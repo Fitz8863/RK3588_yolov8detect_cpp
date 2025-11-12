@@ -55,7 +55,6 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    struct timeval time1,time2;
     struct timeval time;
     auto beforeTime = time.tv_sec * 1000 + time.tv_usec / 1000;
     int frames = 0;
@@ -65,8 +64,6 @@ int main(int argc, char** argv)
     {
         cap >> frame;
         if (frame.empty()) break;
-
-        gettimeofday(&time1, nullptr);
 
         // 将cv::Mat转换为image_buffer_t
         image_buffer_t src_image;
@@ -83,7 +80,7 @@ int main(int argc, char** argv)
         memset(&od_results, 0, sizeof(od_results));
 
         ret = inference_yolov8_model(&rknn_app_ctx, &src_image, &od_results);
-        
+
         if (ret != 0)
         {
             printf("inference_yolov8_model fail! ret=%d\n", ret);
@@ -109,26 +106,22 @@ int main(int argc, char** argv)
 
         gettimeofday(&time2, nullptr);
 
-        
-        auto beforeTime = time1.tv_sec * 1000 + time1.tv_usec / 1000;
-        auto currentTime = time2.tv_sec * 1000 + time2.tv_usec / 1000;
-        std::cout << "使用时间：" << float(currentTime - beforeTime) << "ms"  << std::endl;
-
+    
         // 显示
-        // cv::imshow("YOLOv8 RKNN Detection", frame);
+        cv::imshow("YOLOv8 RKNN Detection", frame);
 
-        // // 按 q 退出
-        // if (cv::waitKey(1) == 'q')
-        //     break;
+        // 按 q 退出
+        if (cv::waitKey(1) == 'q')
+            break;
 
-        // frames++;
-        // if (frames >= 60) {
-        //     gettimeofday(&time, nullptr);
-        //     auto currentTime = time.tv_sec * 1000 + time.tv_usec / 1000;
-        //     printf("60帧平均帧率: %.2f fps\n", 60.0 / float(currentTime - beforeTime) * 1000.0);
-        //     beforeTime = currentTime;
-        //     frames = 0;
-        // }
+        frames++;
+        if (frames >= 60) {
+            gettimeofday(&time, nullptr);
+            auto currentTime = time.tv_sec * 1000 + time.tv_usec / 1000;
+            printf("60帧平均帧率: %.2f fps\n", 60.0 / float(currentTime - beforeTime) * 1000.0);
+            beforeTime = currentTime;
+            frames = 0;
+        }
 
     }
 
