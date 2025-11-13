@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp
+CMAKE_SOURCE_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build
+CMAKE_BINARY_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build
 
 # Include any dependencies generated for this target.
 include utils.out/CMakeFiles/fileutils.dir/depend.make
@@ -72,16 +72,16 @@ include utils.out/CMakeFiles/fileutils.dir/flags.make
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.o: utils.out/CMakeFiles/fileutils.dir/flags.make
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.o: ../utils/file_utils.c
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.o: utils.out/CMakeFiles/fileutils.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object utils.out/CMakeFiles/fileutils.dir/file_utils.c.o"
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT utils.out/CMakeFiles/fileutils.dir/file_utils.c.o -MF CMakeFiles/fileutils.dir/file_utils.c.o.d -o CMakeFiles/fileutils.dir/file_utils.c.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object utils.out/CMakeFiles/fileutils.dir/file_utils.c.o"
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT utils.out/CMakeFiles/fileutils.dir/file_utils.c.o -MF CMakeFiles/fileutils.dir/file_utils.c.o.d -o CMakeFiles/fileutils.dir/file_utils.c.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.c
 
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fileutils.dir/file_utils.c.i"
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.c > CMakeFiles/fileutils.dir/file_utils.c.i
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.c > CMakeFiles/fileutils.dir/file_utils.c.i
 
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fileutils.dir/file_utils.c.s"
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.c -o CMakeFiles/fileutils.dir/file_utils.c.s
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.c -o CMakeFiles/fileutils.dir/file_utils.c.s
 
 # Object files for target fileutils
 fileutils_OBJECTS = \
@@ -93,19 +93,19 @@ fileutils_EXTERNAL_OBJECTS =
 utils.out/libfileutils.a: utils.out/CMakeFiles/fileutils.dir/file_utils.c.o
 utils.out/libfileutils.a: utils.out/CMakeFiles/fileutils.dir/build.make
 utils.out/libfileutils.a: utils.out/CMakeFiles/fileutils.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libfileutils.a"
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && $(CMAKE_COMMAND) -P CMakeFiles/fileutils.dir/cmake_clean_target.cmake
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fileutils.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libfileutils.a"
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && $(CMAKE_COMMAND) -P CMakeFiles/fileutils.dir/cmake_clean_target.cmake
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fileutils.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 utils.out/CMakeFiles/fileutils.dir/build: utils.out/libfileutils.a
 .PHONY : utils.out/CMakeFiles/fileutils.dir/build
 
 utils.out/CMakeFiles/fileutils.dir/clean:
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out && $(CMAKE_COMMAND) -P CMakeFiles/fileutils.dir/cmake_clean.cmake
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out && $(CMAKE_COMMAND) -P CMakeFiles/fileutils.dir/cmake_clean.cmake
 .PHONY : utils.out/CMakeFiles/fileutils.dir/clean
 
 utils.out/CMakeFiles/fileutils.dir/depend:
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out/CMakeFiles/fileutils.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out/CMakeFiles/fileutils.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : utils.out/CMakeFiles/fileutils.dir/depend
 

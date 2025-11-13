@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils
+C_INCLUDES = -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils
 
 C_FLAGS = 
 

@@ -1,8 +1,8 @@
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.cc \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.cc \
  /usr/include/stdc-predef.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/yolov8.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/rknpu2/include/rknn_api.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/yolov8.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/rknpu2/include/rknn_api.h \
  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -18,8 +18,8 @@ CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: \
  /usr/include/aarch64-linux-gnu/bits/wchar.h \
  /usr/include/aarch64-linux-gnu/bits/stdint-intn.h \
  /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/common.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/aarch64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/aarch64-linux-gnu/c++/11/bits/os_defines.h \
@@ -55,8 +55,8 @@ CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: \
  /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_utils.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_utils.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/common.h \
  /usr/include/c++/11/math.h /usr/include/c++/11/cmath /usr/include/math.h \
  /usr/include/aarch64-linux-gnu/bits/math-vector.h \
  /usr/include/aarch64-linux-gnu/bits/libm-simd-decl-stubs.h \

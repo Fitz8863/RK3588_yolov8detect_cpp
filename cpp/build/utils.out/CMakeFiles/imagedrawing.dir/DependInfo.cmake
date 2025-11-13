@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_drawing.c" "utils.out/CMakeFiles/imagedrawing.dir/image_drawing.c.o" "gcc" "utils.out/CMakeFiles/imagedrawing.dir/image_drawing.c.o.d"
+  "/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_drawing.c" "utils.out/CMakeFiles/imagedrawing.dir/image_drawing.c.o" "gcc" "utils.out/CMakeFiles/imagedrawing.dir/image_drawing.c.o.d"
   )
 
 # Targets to which this target links.

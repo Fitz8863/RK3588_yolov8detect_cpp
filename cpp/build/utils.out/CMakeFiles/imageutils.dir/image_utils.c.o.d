@@ -1,5 +1,5 @@
 utils.out/CMakeFiles/imageutils.dir/image_utils.c.o: \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_utils.c \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_utils.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -63,23 +63,23 @@ utils.out/CMakeFiles/imageutils.dir/image_utils.c.o: \
  /usr/include/aarch64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/aarch64-linux-gnu/bits/mathcalls.h \
  /usr/include/aarch64-linux-gnu/sys/time.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_version.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_type.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_version.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_type.h \
  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/aarch64-linux-gnu/bits/wchar.h \
  /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/rga.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_common.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_buffer.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_single.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_task.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/im2d_mpi.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include/drmrga.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/rga.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_buffer.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_single.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_task.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/im2d_mpi.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include/drmrga.h \
  /usr/include/errno.h /usr/include/aarch64-linux-gnu/bits/errno.h \
  /usr/include/linux/errno.h /usr/include/aarch64-linux-gnu/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/stb_image/stb_image.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/stb_image/stb_image.h \
  /usr/include/string.h \
  /usr/include/aarch64-linux-gnu/bits/types/locale_t.h \
  /usr/include/aarch64-linux-gnu/bits/types/__locale_t.h \
@@ -88,8 +88,8 @@ utils.out/CMakeFiles/imageutils.dir/image_utils.c.o: \
  /usr/lib/gcc/aarch64-linux-gnu/11/include/syslimits.h \
  /usr/include/limits.h /usr/include/aarch64-linux-gnu/bits/posix2_lim.h \
  /usr/include/assert.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/stb_image/stb_image_write.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/jpeg_turbo/include/turbojpeg.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_utils.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/common.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.h
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/stb_image/stb_image_write.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/jpeg_turbo/include/turbojpeg.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_utils.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.h

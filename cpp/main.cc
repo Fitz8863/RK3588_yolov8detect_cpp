@@ -104,8 +104,6 @@ int main(int argc, char** argv)
         }
         // std::cout << "\n" << std::endl;
 
-        gettimeofday(&time2, nullptr);
-
     
         // 显示
         cv::imshow("YOLOv8 RKNN Detection", frame);

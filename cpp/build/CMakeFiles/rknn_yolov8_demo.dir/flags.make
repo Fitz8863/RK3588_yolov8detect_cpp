@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/rknpu2/include -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/stb_image -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/jpeg_turbo/include -I/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/librga/include
+CXX_INCLUDES = -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/rknpu2/include -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/stb_image -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/jpeg_turbo/include -I/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/librga/include
 
 CXX_FLAGS = 
 

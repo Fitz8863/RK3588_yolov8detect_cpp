@@ -1,4 +1,4 @@
-# Install script for directory: /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp
+# Install script for directory: /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,8 +44,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/3rdparty.out/cmake_install.cmake")
-  include("/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/utils.out/cmake_install.cmake")
+  include("/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/3rdparty.out/cmake_install.cmake")
+  include("/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/utils.out/cmake_install.cmake")
 
 endif()
 
@@ -57,5 +57,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

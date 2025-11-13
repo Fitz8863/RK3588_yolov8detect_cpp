@@ -1,5 +1,5 @@
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/main.cc \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/main.cc \
  /usr/include/stdc-predef.h \
  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
@@ -61,10 +61,10 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: \
  /usr/include/alloca.h /usr/include/aarch64-linux-gnu/bits/stdlib-float.h \
  /usr/include/c++/11/bits/std_abs.h /usr/include/string.h \
  /usr/include/strings.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/yolov8.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/3rdparty/rknpu2/include/rknn_api.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/common.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/yolov8.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/3rdparty/rknpu2/include/rknn_api.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/c++/11/bits/functexcept.h \
  /usr/include/c++/11/bits/exception_defines.h \
@@ -96,10 +96,10 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: \
  /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_utils.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/common.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.h \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/image_drawing.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_utils.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/common.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.h \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/image_drawing.h \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/iosfwd \
  /usr/include/c++/11/bits/stringfwd.h /usr/include/c++/11/bits/postypes.h \

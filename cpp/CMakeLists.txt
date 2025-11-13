@@ -44,6 +44,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries(${PROJECT_NAME} Threads::Threads)
 endif()
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}

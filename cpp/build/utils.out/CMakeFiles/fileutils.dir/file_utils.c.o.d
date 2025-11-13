@@ -1,5 +1,5 @@
 utils.out/CMakeFiles/fileutils.dir/file_utils.c.o: \
- /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils/file_utils.c \
+ /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils/file_utils.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

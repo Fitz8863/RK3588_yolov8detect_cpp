@@ -1,4 +1,4 @@
-# Install script for directory: /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/utils
+# Install script for directory: /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/utils
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

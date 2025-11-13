@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp
+CMAKE_SOURCE_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build
+CMAKE_BINARY_DIR = /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/rknn_yolov8_demo.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/rknn_yolov8_demo.dir/flags.make
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: CMakeFiles/rknn_yolov8_demo.dir/flags.make
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: CMakeFiles/rknn_yolov8_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/main.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/main.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/main.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/main.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/main.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/main.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/main.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/main.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/main.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/main.cc
 
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rknn_yolov8_demo.dir/main.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/main.cc > CMakeFiles/rknn_yolov8_demo.dir/main.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/main.cc > CMakeFiles/rknn_yolov8_demo.dir/main.cc.i
 
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rknn_yolov8_demo.dir/main.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/main.cc -o CMakeFiles/rknn_yolov8_demo.dir/main.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/main.cc -o CMakeFiles/rknn_yolov8_demo.dir/main.cc.s
 
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: CMakeFiles/rknn_yolov8_demo.dir/flags.make
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: ../postprocess.cc
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o: CMakeFiles/rknn_yolov8_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.cc
 
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.cc > CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.cc > CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.i
 
 CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/postprocess.cc -o CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/postprocess.cc -o CMakeFiles/rknn_yolov8_demo.dir/postprocess.cc.s
 
 CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: CMakeFiles/rknn_yolov8_demo.dir/flags.make
 CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc
 CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: CMakeFiles/rknn_yolov8_demo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/rknpu2/yolov8.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o -MF CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o.d -o CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o -c /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/rknpu2/yolov8.cc
 
 CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/rknpu2/yolov8.cc > CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/rknpu2/yolov8.cc > CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.i
 
 CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/rknpu2/yolov8.cc -o CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/rknpu2/yolov8.cc -o CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.s
 
 # Object files for target rknn_yolov8_demo
 rknn_yolov8_demo_OBJECTS = \
@@ -185,7 +185,7 @@ rknn_yolov8_demo: /usr/lib/aarch64-linux-gnu/libopencv_photo.so.4.5.4d
 rknn_yolov8_demo: /usr/lib/aarch64-linux-gnu/libopencv_imgproc.so.4.5.4d
 rknn_yolov8_demo: /usr/lib/aarch64-linux-gnu/libopencv_core.so.4.5.4d
 rknn_yolov8_demo: CMakeFiles/rknn_yolov8_demo.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable rknn_yolov8_demo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable rknn_yolov8_demo"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rknn_yolov8_demo.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -197,6 +197,6 @@ CMakeFiles/rknn_yolov8_demo.dir/clean:
 .PHONY : CMakeFiles/rknn_yolov8_demo.dir/clean
 
 CMakeFiles/rknn_yolov8_demo.dir/depend:
-	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/yolov8/cpp/build/CMakeFiles/rknn_yolov8_demo.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build /home/orangepi/projects/rknn_model_zoo-2.0.0/RK3588_yolov8detect_cpp/cpp/build/CMakeFiles/rknn_yolov8_demo.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/rknn_yolov8_demo.dir/depend
 
