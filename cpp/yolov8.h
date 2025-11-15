@@ -12,12 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// wwwwwwww
 #ifndef _RKNN_DEMO_YOLOV8_H_
 #define _RKNN_DEMO_YOLOV8_H_
 
 #include "rknn_api.h"
 #include "common.h"
+#include <string>
+#include <mutex>
+#include "opencv2/opencv.hpp"
 
 typedef struct {
     rknn_context rknn_ctx;
@@ -32,11 +34,25 @@ typedef struct {
 
 #include "postprocess.h"
 
+class rkYolov8
+{
+private:
+    std::mutex mtx;
+    
+    std::string model_path;
+    // char* model_path;
+    float nms_threshold, box_conf_threshold;     // 默认的NMS阈值   // 默认的置信度阈值
+    rknn_app_context_t *app_ctx;
 
-int init_yolov8_model(const char* model_path, rknn_app_context_t* app_ctx);
+public:
 
-int release_yolov8_model(rknn_app_context_t* app_ctx);
+    rkYolov8(const char* model_path);
+    int init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_weight);
+    rknn_app_context_t *Get_app_ctx();
+    object_detect_result_list inference_yolov8_model(image_buffer_t* img);
+    ~rkYolov8();
+};
 
-int inference_yolov8_model(rknn_app_context_t* app_ctx, image_buffer_t* img, object_detect_result_list* od_results);
+
 
 #endif //_RKNN_DEMO_YOLOV8_H_

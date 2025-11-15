@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 
 project(rknn_model_zoo_3rdparty_libs)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set (TARGET_LIB_ARCH aarch64)
 
@@ -12,6 +14,10 @@ endif()
 # stb image
 set(STB_PATH ${CMAKE_CURRENT_SOURCE_DIR}/stb_image)
 set(STB_INCLUDES ${STB_PATH} PARENT_SCOPE)
+
+# rknnpool
+set(THREAD_PATH ${CMAKE_CURRENT_SOURCE_DIR}/thread_pool)
+set(THREAD_INCLUDES ${THREAD_PATH} PARENT_SCOPE)
 
 # jpeg turbo
 set(JPEG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/jpeg_turbo)

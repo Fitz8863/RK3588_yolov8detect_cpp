@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "rknn_api.h"
+#include <mutex>
 
 const int RK3588 = 3;
 

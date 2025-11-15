@@ -1,17 +1,3 @@
-// Copyright (c) 2023 by Rockchip Electronics Co., Ltd. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,7 +8,9 @@
 #include "file_utils.h"
 #include "image_utils.h"
 
-static void dump_tensor_attr(rknn_tensor_attr *attr)
+#include "coreNum.hpp"
+
+static void dump_tensor_attr(rknn_tensor_attr* attr)
 {
     printf("  index=%d, name=%s, n_dims=%d, dims=[%d, %d, %d, %d], n_elems=%d, size=%d, fmt=%s, type=%s, qnt_type=%s, "
            "zp=%d, scale=%f\n",
@@ -31,22 +19,45 @@ static void dump_tensor_attr(rknn_tensor_attr *attr)
            get_qnt_type_string(attr->qnt_type), attr->zp, attr->scale);
 }
 
-int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
-{
+rkYolov8::rkYolov8(const char* model_path) {
+    this->model_path = model_path;
+    nms_threshold = NMS_THRESH;      // 默认的NMS阈值
+    box_conf_threshold = BOX_THRESH; // 默认的置信度阈值
+}
+
+// 获取类成员变app_ctx 接口
+rknn_app_context_t * rkYolov8::Get_app_ctx(){
+    return this->app_ctx;
+}
+
+int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_weight) {
     int ret;
     int model_len = 0;
     char *model;
-    rknn_context ctx = 0;
 
+    // rknn_context ctx = 0;
+
+    this->app_ctx = input_app_ctx;
+    
     // Load RKNN Model
-    model_len = read_data_from_file(model_path, &model);
+    model_len = read_data_from_file(this->model_path.c_str(), &model);
     if (model == NULL)
     {
         printf("load_model fail!\n");
         return -1;
     }
 
-    ret = rknn_init(&ctx, model, model_len, 0, NULL);
+    // 共享权重
+    if(true == share_weight){
+        ret = rknn_dup_context(&(input_app_ctx->rknn_ctx), &(this->app_ctx->rknn_ctx));
+    }
+    else{
+        std::cout<<"wwwwwwwwwwwwwwww"<<std::endl;
+        ret = rknn_init(&(input_app_ctx->rknn_ctx), model, model_len, 0, NULL);
+    }
+
+    std::cout<<"wwwwwwwwwwwwwwww"<<std::endl;
+
     free(model);
     if (ret < 0)
     {
@@ -55,8 +66,23 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
     }
 
     // 设置运行的NPU核
-    rknn_core_mask core_mask = RKNN_NPU_CORE_1;
-    ret = rknn_set_core_mask(ctx, core_mask);
+    rknn_core_mask core_mask;
+    switch (get_core_num())
+    {
+    case 0:
+        core_mask = RKNN_NPU_CORE_0;
+        break;
+    case 1:
+        core_mask = RKNN_NPU_CORE_1;
+        break;
+    case 2:
+        core_mask = RKNN_NPU_CORE_2;
+        break;
+    }
+    
+    printf("当前的NPU核:%d\n", core_mask);
+
+    ret = rknn_set_core_mask(this->app_ctx->rknn_ctx, core_mask);
     if (ret < 0)
     {
         printf("rknn_init core error ret=%d\n", ret);
@@ -65,7 +91,7 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
 
     // Get Model Input Output Number
     rknn_input_output_num io_num;
-    ret = rknn_query(ctx, RKNN_QUERY_IN_OUT_NUM, &io_num, sizeof(io_num));
+    ret = rknn_query(this->app_ctx->rknn_ctx, RKNN_QUERY_IN_OUT_NUM, &io_num, sizeof(io_num));
     if (ret != RKNN_SUCC)
     {
         printf("rknn_query fail! ret=%d\n", ret);
@@ -80,7 +106,7 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
     for (int i = 0; i < io_num.n_input; i++)
     {
         input_attrs[i].index = i;
-        ret = rknn_query(ctx, RKNN_QUERY_INPUT_ATTR, &(input_attrs[i]), sizeof(rknn_tensor_attr));
+        ret = rknn_query(this->app_ctx->rknn_ctx, RKNN_QUERY_INPUT_ATTR, &(input_attrs[i]), sizeof(rknn_tensor_attr));
         if (ret != RKNN_SUCC)
         {
             printf("rknn_query fail! ret=%d\n", ret);
@@ -96,7 +122,7 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
     for (int i = 0; i < io_num.n_output; i++)
     {
         output_attrs[i].index = i;
-        ret = rknn_query(ctx, RKNN_QUERY_OUTPUT_ATTR, &(output_attrs[i]), sizeof(rknn_tensor_attr));
+        ret = rknn_query(this->app_ctx->rknn_ctx, RKNN_QUERY_OUTPUT_ATTR, &(output_attrs[i]), sizeof(rknn_tensor_attr));
         if (ret != RKNN_SUCC)
         {
             printf("rknn_query fail! ret=%d\n", ret);
@@ -105,8 +131,6 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
         dump_tensor_attr(&(output_attrs[i]));
     }
 
-    // Set to context
-    app_ctx->rknn_ctx = ctx;
 
     // TODO
     if (output_attrs[0].qnt_type == RKNN_TENSOR_QNT_AFFINE_ASYMMETRIC && output_attrs[0].type == RKNN_TENSOR_INT8)
@@ -144,24 +168,26 @@ int init_yolov8_model(const char *model_path, rknn_app_context_t *app_ctx)
     return 0;
 }
 
-
-int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, object_detect_result_list *od_results)
+object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
 {
     int ret;
     image_buffer_t dst_img;
     letterbox_t letter_box;
+
+    object_detect_result_list od_results;
+
     rknn_input inputs[app_ctx->io_num.n_input];
     rknn_output outputs[app_ctx->io_num.n_output];
-    const float nms_threshold = NMS_THRESH;      // 默认的NMS阈值
-    const float box_conf_threshold = BOX_THRESH; // 默认的置信度阈值
     int bg_color = 114;
 
-    if ((!app_ctx) || !(img) || (!od_results))
+    cv::Mat frame(img->height, img->width, CV_8UC3, img->virt_addr);
+
+    if ((!app_ctx) || !(img))
     {
-        return -1;
+        return od_results;
     }
 
-    memset(od_results, 0x00, sizeof(*od_results));
+    memset(&od_results, 0x00, sizeof(od_results));
     memset(&letter_box, 0, sizeof(letterbox_t));
     memset(&dst_img, 0, sizeof(image_buffer_t));
     memset(inputs, 0, sizeof(inputs));
@@ -173,10 +199,11 @@ int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, obj
     dst_img.format = IMAGE_FORMAT_RGB888;
     dst_img.size = get_image_size(&dst_img);
     dst_img.virt_addr = (unsigned char *)malloc(dst_img.size);
+
     if (dst_img.virt_addr == NULL)
     {
         printf("malloc buffer size:%d fail!\n", dst_img.size);
-        return -1;
+        return od_results;
     }
 
     // letterbox
@@ -184,7 +211,7 @@ int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, obj
     if (ret < 0)
     {
         printf("convert_image_with_letterbox fail! ret=%d\n", ret);
-        return -1;
+        return od_results;
     }
 
     // Set Input Data
@@ -195,10 +222,11 @@ int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, obj
     inputs[0].buf = dst_img.virt_addr;
 
     ret = rknn_inputs_set(app_ctx->rknn_ctx, app_ctx->io_num.n_input, inputs);
+
     if (ret < 0)
     {
         printf("rknn_input_set fail! ret=%d\n", ret);
-        return -1;
+        return od_results;
     }
 
     // Run
@@ -207,7 +235,7 @@ int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, obj
     if (ret < 0)
     {
         printf("rknn_run fail! ret=%d\n", ret);
-        return -1;
+        return od_results;
     }
 
     // Get Output
@@ -225,7 +253,25 @@ int inference_yolov8_model(rknn_app_context_t *app_ctx, image_buffer_t *img, obj
     }
 
     // Post Process
-    post_process(app_ctx, outputs, &letter_box, box_conf_threshold, nms_threshold, od_results);
+    post_process(app_ctx, outputs, &letter_box, this->box_conf_threshold, this->nms_threshold, &od_results);
+
+    
+    // 绘制检测框
+    for (int i = 0; i < od_results.count; i++)
+    {
+        object_detect_result* det_result = &(od_results.results[i]);
+        int x1 = det_result->box.left;
+        int y1 = det_result->box.top;
+        int x2 = det_result->box.right;
+        int y2 = det_result->box.bottom;
+        cv::rectangle(frame, cv::Rect(x1, y1, x2 - x1, y2 - y1), cv::Scalar(0, 255, 0), 2);
+        char text[128];
+        sprintf(text, "%s %.1f%%", coco_cls_to_name(det_result->cls_id), det_result->prop * 100);
+        cv::putText(frame, text, cv::Point(x1, y1 - 5),
+            cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 1);
+        // std::cout << text;
+    }
+    // std::cout << "\n" << std::endl;
 
     // Remeber to release rknn output
     rknn_outputs_release(app_ctx->rknn_ctx, app_ctx->io_num.n_output, outputs);
@@ -236,26 +282,24 @@ out:
         free(dst_img.virt_addr);
     }
 
-    return ret;
+    return od_results;
 }
 
 
-int release_yolov8_model(rknn_app_context_t *app_ctx)
-{
-    if (app_ctx->input_attrs != NULL)
+rkYolov8::~rkYolov8() {
+     if (this->app_ctx->input_attrs != NULL)
     {
-        free(app_ctx->input_attrs);
-        app_ctx->input_attrs = NULL;
+        free(this->app_ctx->input_attrs);
+        this->app_ctx->input_attrs = NULL;
     }
-    if (app_ctx->output_attrs != NULL)
+    if (this->app_ctx->output_attrs != NULL)
     {
-        free(app_ctx->output_attrs);
-        app_ctx->output_attrs = NULL;
+        free(this->app_ctx->output_attrs);
+        this->app_ctx->output_attrs = NULL;
     }
-    if (app_ctx->rknn_ctx != 0)
+    if (this->app_ctx->rknn_ctx != 0)
     {
-        rknn_destroy(app_ctx->rknn_ctx);
-        app_ctx->rknn_ctx = 0;
+        rknn_destroy(this->app_ctx->rknn_ctx);
+        this->app_ctx->rknn_ctx = 0;
     }
-    return 0;
 }

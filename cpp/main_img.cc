@@ -30,13 +30,6 @@
 -------------------------------------------*/
 int main(int argc, char** argv)
 {
-    // 打印 OpenCV 版本
-    // std::cout << "OpenCV version: "
-    //     << CV_VERSION_MAJOR << "."
-    //     << CV_VERSION_MINOR << "."
-    //     << CV_VERSION_REVISION << std::endl;
-    // std::cout << "OpenCV library path: " << cv::getBuildInformation() << std::endl;
-
     if (argc != 3)
     {
         printf("%s <model_path> <image_path>\n", argv[0]);
@@ -51,8 +44,14 @@ int main(int argc, char** argv)
     memset(&rknn_app_ctx, 0, sizeof(rknn_app_context_t));
 
     init_post_process();
+    
+    std::cout << "here" << std::endl;
+    rkYolov8 yolo(model_path);
 
-    ret = init_yolov8_model(model_path, &rknn_app_ctx);
+    // ret = init_yolov8_model(model_path, &rknn_app_ctx);
+    ret = yolo.init_yolov8_model(&rknn_app_ctx);
+
+
     if (ret != 0)
     {
         printf("init_yolov8_model fail! ret=%d model_path=%s\n", ret, model_path);
@@ -72,7 +71,9 @@ int main(int argc, char** argv)
 
     object_detect_result_list od_results;
 
-    ret = inference_yolov8_model(&rknn_app_ctx, &src_image, &od_results);
+    
+
+    ret = yolo.inference_yolov8_model( &src_image, &od_results);
     if (ret != 0)
     {
         printf("init_yolov8_model fail! ret=%d\n", ret);
@@ -104,11 +105,11 @@ int main(int argc, char** argv)
 out:
     deinit_post_process();
 
-    ret = release_yolov8_model(&rknn_app_ctx);
-    if (ret != 0)
-    {
-        printf("release_yolov8_model fail! ret=%d\n", ret);
-    }
+    // ret = release_yolov8_model(&rknn_app_ctx);
+    // if (ret != 0)
+    // {
+    //     printf("release_yolov8_model fail! ret=%d\n", ret);
+    // }
 
     if (src_image.virt_addr != NULL)
     {

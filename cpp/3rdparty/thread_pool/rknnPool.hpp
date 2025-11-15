@@ -15,10 +15,10 @@ class rknnPool
 private:
     int threadNum;
     std::string modelPath;
+    long long int id;
 
-    long long id;
     std::mutex idMtx, queueMtx;
-    std::unique_ptr<dpool::ThreadPool> pool;
+    std::unique_ptr<ThreadPool> pool;
     std::queue<std::future<outputType>> futs;
     std::vector<std::shared_ptr<rknnModel>> models;
 
@@ -48,23 +48,29 @@ int rknnPool<rknnModel, inputType, outputType>::init()
 {
     try
     {
-        this->pool = std::make_unique<dpool::ThreadPool>(this->threadNum);
-        for (int i = 0; i < this->threadNum; i++)
+        this->pool = std::make_unique<ThreadPool>(this->threadNum);
+        for (int i = 0; i < this->threadNum; i++) {
             models.push_back(std::make_shared<rknnModel>(this->modelPath.c_str()));
+            // std::cout<<"push 成功"<<std::endl;
+        }
     }
+    // 处理错误情况
     catch (const std::bad_alloc& e)
     {
         std::cout << "Out of memory: " << e.what() << std::endl;
         return -1;
     }
-    // 初始化模型/Initialize the model
-    for (int i = 0, ret = 0; i < threadNum; i++)
+    
+    // 初始化权重/Initialize the model
+    for (int i = 0, ret = 0; i < this->threadNum; i++)
     {
-        ret = models[i]->init(models[0]->get_pctx(), i != 0);
-        if (ret != 0)
+        ret = models[i]->init_yolov8_model(models[0]->Get_app_ctx(), i!=0);   // init(models[0]->get_pctx(), i != 0);
+        if (ret != 0){
+            // std::cout<<"这里出问题了"<<std::endl;
             return ret;
+        }
+        std::cout<<"线程池初始化出问题"<<std::endl;
     }
-
     return 0;
 }
 
@@ -81,7 +87,7 @@ template <typename rknnModel, typename inputType, typename outputType>
 int rknnPool<rknnModel, inputType, outputType>::put(inputType inputData)
 {
     std::lock_guard<std::mutex> lock(queueMtx);
-    futs.push(pool->submit(&rknnModel::infer, models[this->getModelId()], inputData));
+    futs.push(pool->enqueue(&rknnModel::inference_yolov8_model, models[this->getModelId()], inputData));
     return 0;
 }
 
@@ -105,5 +111,4 @@ rknnPool<rknnModel, inputType, outputType>::~rknnPool()
         futs.pop();
     }
 }
-
 #endif

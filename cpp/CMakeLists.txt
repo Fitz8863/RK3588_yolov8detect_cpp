@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 
 project(rknn_yolov8_demo)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-pthread")
+
 if (ENABLE_ASAN)
 	message(STATUS "BUILD WITH ADDRESS SANITIZER")
 	set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
@@ -49,6 +53,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${LIBRKNNRT_INCLUDES}
+    ${THREAD_INCLUDES}
 )
 
 # install(TARGETS ${PROJECT_NAME} DESTINATION .)

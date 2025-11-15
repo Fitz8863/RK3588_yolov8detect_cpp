@@ -2,13 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "yolov8.h"
 #include "image_utils.h"
 #include "file_utils.h"
 #include "image_drawing.h"
 #include <iostream>
-#include <opencv2/opencv.hpp>
+#include "opencv2/opencv.hpp"
 #include <sys/time.h>
+
+#include "yolov8.h"
+#include "rknnPool.hpp"
 
 int main(int argc, char** argv)
 {
@@ -21,7 +23,12 @@ int main(int argc, char** argv)
     }
 
     const char* model_path = argv[1];
-    std::string input_source = argv[2];
+    const char* video_name  = argv[2];
+
+    int threadNum = 3;
+    // rknnPool<rkYolov8, image_buffer_t*, object_detect_result_list> testPool(model_path, threadNum);
+
+    
 
     int ret;
     rknn_app_context_t rknn_app_ctx;
@@ -29,8 +36,20 @@ int main(int argc, char** argv)
 
     init_post_process();
 
-    // 初始化模型
-    ret = init_yolov8_model(model_path, &rknn_app_ctx);
+    
+
+    rkYolov8 yolo(model_path);
+
+    // if (testPool.init() != 0)
+    // {
+    //     printf("rknnPool init fail!\n");
+    //     return -1;
+    // }
+
+    // std::cout<<"比亚迪的"<<std::endl;
+
+    ret = yolo.init_yolov8_model(&rknn_app_ctx,false);
+    
     if (ret != 0)
     {
         printf("init_yolov8_model fail! ret=%d model_path=%s\n", ret, model_path);
@@ -39,25 +58,26 @@ int main(int argc, char** argv)
 
     // 打开视频或摄像头
     cv::VideoCapture cap;
-    if (isdigit(input_source[0]))
+    if (std::string(video_name).find("/dev/video") == 0)
     {
-        int cam_id = std::stoi(input_source);
-        cap.open(cam_id);
+        
+        std::string pipeline = "v4l2src device=" + std::string(video_name) +
+            " ! image/jpeg, width=1280, height=720, framerate=60/1 ! "
+            "jpegdec ! videoconvert ! appsink";
+        cap.open(pipeline, cv::CAP_GSTREAMER);
+
+        // 如果没有GStreamer环境的话使用下面这个
+        // capture.open(std::string(video_name));
+ 
     }
     else
     {
-        cap.open(input_source);
-    }
-
-    if (!cap.isOpened())
-    {
-        printf("Failed to open video/camera: %s\n", input_source.c_str());
-        return -1;
+        cap.open(std::string(video_name));
     }
 
     struct timeval time;
     auto beforeTime = time.tv_sec * 1000 + time.tv_usec / 1000;
-    int frames = 0;
+    int count = 0;
 
     cv::Mat frame;
     while (true)
@@ -77,32 +97,28 @@ int main(int argc, char** argv)
         src_image.virt_addr = frame.data; // 不复制数据，直接引用OpenCV内存
 
         object_detect_result_list od_results;
-        memset(&od_results, 0, sizeof(od_results));
 
-        ret = inference_yolov8_model(&rknn_app_ctx, &src_image, &od_results);
+        // memset(&od_results, 0, sizeof(od_results));
+
+        // ret = inference_yolov8_model(&rknn_app_ctx, &src_image, &od_results);
+
+        od_results = yolo.inference_yolov8_model(&src_image);
+
+        // if (testPool.put(&src_image) != 0)
+        // {
+        //     printf("Put frame to pool failed!\n");
+        //     break;
+        // }
+
+        // if(testPool.get(od_results) == 0){
+
+        // }
 
         if (ret != 0)
         {
             printf("inference_yolov8_model fail! ret=%d\n", ret);
             break;
         }
-
-        // 绘制检测框
-        for (int i = 0; i < od_results.count; i++)
-        {
-            object_detect_result* det_result = &(od_results.results[i]);
-            int x1 = det_result->box.left;
-            int y1 = det_result->box.top;
-            int x2 = det_result->box.right;
-            int y2 = det_result->box.bottom;
-            cv::rectangle(frame, cv::Rect(x1, y1, x2 - x1, y2 - y1), cv::Scalar(0, 255, 0), 2);
-            char text[128];
-            sprintf(text, "%s %.1f%%", coco_cls_to_name(det_result->cls_id), det_result->prop * 100);
-            cv::putText(frame, text, cv::Point(x1, y1 - 5),
-                cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255), 1);
-            // std::cout << text;
-        }
-        // std::cout << "\n" << std::endl;
 
     
         // 显示
@@ -112,19 +128,18 @@ int main(int argc, char** argv)
         if (cv::waitKey(1) == 'q')
             break;
 
-        frames++;
-        if (frames >= 60) {
+        count++;
+        if (count >= 60) {
             gettimeofday(&time, nullptr);
             auto currentTime = time.tv_sec * 1000 + time.tv_usec / 1000;
             printf("60帧平均帧率: %.2f fps\n", 60.0 / float(currentTime - beforeTime) * 1000.0);
             beforeTime = currentTime;
-            frames = 0;
+            count = 0;
         }
 
     }
 
     deinit_post_process();
-    release_yolov8_model(&rknn_app_ctx);
 
     return 0;
 }
