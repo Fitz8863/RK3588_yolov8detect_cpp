@@ -64,7 +64,7 @@ int rknnPool<rknnModel, inputType, outputType>::init()
     // 初始化权重/Initialize the model
     for (int i = 0, ret = 0; i < this->threadNum; i++)
     {
-        ret = models[i]->init_yolov8_model(models[0]->Get_app_ctx(), i!=0);   // init(models[0]->get_pctx(), i != 0);
+        ret = models[i]->init_yolov8_model(*(models[0]->Get_app_ctx()), i!=0);   // init(models[0]->get_pctx(), i != 0);
         if (ret != 0){
             // std::cout<<"这里出问题了"<<std::endl;
             return ret;

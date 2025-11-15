@@ -42,7 +42,7 @@ private:
     std::string model_path;
     // char* model_path;
     float nms_threshold, box_conf_threshold;     // 默认的NMS阈值   // 默认的置信度阈值
-    rknn_app_context_t *app_ctx;
+    rknn_app_context_t app_ctx;
 
 public:
 

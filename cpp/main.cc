@@ -28,15 +28,13 @@ int main(int argc, char** argv)
     int threadNum = 3;
     // rknnPool<rkYolov8, image_buffer_t*, object_detect_result_list> testPool(model_path, threadNum);
 
-    
+    // std::cout<<"比亚迪的"<<std::endl;
 
     int ret;
-    rknn_app_context_t rknn_app_ctx;
-    memset(&rknn_app_ctx, 0, sizeof(rknn_app_context_t));
+    // rknn_app_context_t rknn_app_ctx;
+    // memset(&rknn_app_ctx, 0, sizeof(rknn_app_context_t));
 
     init_post_process();
-
-    
 
     rkYolov8 yolo(model_path);
 
@@ -46,9 +44,7 @@ int main(int argc, char** argv)
     //     return -1;
     // }
 
-    // std::cout<<"比亚迪的"<<std::endl;
-
-    ret = yolo.init_yolov8_model(&rknn_app_ctx,false);
+    ret = yolo.init_yolov8_model(yolo.Get_app_ctx(),false);
     
     if (ret != 0)
     {
@@ -97,8 +93,7 @@ int main(int argc, char** argv)
         src_image.virt_addr = frame.data; // 不复制数据，直接引用OpenCV内存
 
         object_detect_result_list od_results;
-
-        // memset(&od_results, 0, sizeof(od_results));
+        memset(&od_results, 0, sizeof(od_results));
 
         // ret = inference_yolov8_model(&rknn_app_ctx, &src_image, &od_results);
 
