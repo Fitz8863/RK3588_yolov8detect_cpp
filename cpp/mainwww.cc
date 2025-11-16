@@ -80,6 +80,7 @@ int main(int argc, char **argv)
         if (count >= threadNum && testPool.get(od_results) != 0)
             break;
 
+
         // 显示
         cv::imshow("YOLOv8 RKNN Detection", frame);
 

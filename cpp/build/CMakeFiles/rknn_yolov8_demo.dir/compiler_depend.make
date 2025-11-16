@@ -3,8 +3,7 @@
 
 CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc \
   /usr/include/stdc-predef.h \
-  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h \
-  /usr/include/stdint.h \
+  /usr/include/stdio.h \
   /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h \
   /usr/include/features-time64.h \
@@ -14,15 +13,11 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc \
   /usr/include/aarch64-linux-gnu/bits/long-double.h \
   /usr/include/aarch64-linux-gnu/gnu/stubs.h \
   /usr/include/aarch64-linux-gnu/gnu/stubs-lp64.h \
+  /usr/lib/gcc/aarch64-linux-gnu/11/include/stddef.h \
+  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdarg.h \
   /usr/include/aarch64-linux-gnu/bits/types.h \
   /usr/include/aarch64-linux-gnu/bits/typesizes.h \
   /usr/include/aarch64-linux-gnu/bits/time64.h \
-  /usr/include/aarch64-linux-gnu/bits/wchar.h \
-  /usr/include/aarch64-linux-gnu/bits/stdint-intn.h \
-  /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/stdio.h \
-  /usr/lib/gcc/aarch64-linux-gnu/11/include/stddef.h \
-  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdarg.h \
   /usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h \
@@ -48,6 +43,7 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc \
   /usr/include/aarch64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/time_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/aarch64-linux-gnu/bits/stdint-intn.h \
   /usr/include/endian.h \
   /usr/include/aarch64-linux-gnu/bits/endian.h \
   /usr/include/aarch64-linux-gnu/bits/endianness.h \
@@ -83,6 +79,7 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc \
   /usr/include/c++/11/bits/postypes.h \
   /usr/include/c++/11/cwchar \
   /usr/include/wchar.h \
+  /usr/include/aarch64-linux-gnu/bits/wchar.h \
   /usr/include/aarch64-linux-gnu/bits/types/wint_t.h \
   /usr/include/aarch64-linux-gnu/bits/types/mbstate_t.h \
   /usr/include/c++/11/exception \
@@ -112,6 +109,9 @@ CMakeFiles/rknn_yolov8_demo.dir/main.cc.o: ../main.cc \
   /usr/include/c++/11/debug/debug.h \
   /usr/include/c++/11/bits/predefined_ops.h \
   /usr/include/c++/11/cstdint \
+  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h \
+  /usr/include/stdint.h \
+  /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/c++/11/bits/localefwd.h \
   /usr/include/aarch64-linux-gnu/c++/11/bits/c++locale.h \
   /usr/include/c++/11/clocale \
@@ -1407,6 +1407,10 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/c++/11/bits/localefwd.h:
 
+/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/c++/11/cstdio:
+
 /usr/include/opencv4/opencv2/core/mat.hpp:
 
 /usr/include/c++/11/cstdint:
@@ -1489,19 +1493,7 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/aarch64-linux-gnu/bits/time64.h:
 
-/usr/include/aarch64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/aarch64-linux-gnu/bits/types.h:
-
-/usr/include/aarch64-linux-gnu/bits/setjmp.h:
-
-/usr/include/opencv4/opencv2/core/saturate.hpp:
-
-/usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
-
-/usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/cookie_io_functions_t.h:
+/usr/include/aarch64-linux-gnu/bits/xopen_lim.h:
 
 /usr/include/c++/11/iostream:
 
@@ -1511,39 +1503,11 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/c++/11/algorithm:
 
-/usr/include/aarch64-linux-gnu/bits/stdlib-float.h:
+/usr/include/c++/11/ext/type_traits.h:
 
-/usr/include/c++/11/bits/functexcept.h:
+../utils/common.h:
 
-/usr/include/c++/11/bits/stl_list.h:
-
-/usr/include/opencv4/opencv2/flann/saving.h:
-
-/usr/include/aarch64-linux-gnu/bits/time.h:
-
-/usr/include/c++/11/streambuf:
-
-/usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/opencv4/opencv2/stitching/warpers.hpp:
-
-/usr/include/opencv4/opencv2/stitching.hpp:
-
-/usr/lib/gcc/aarch64-linux-gnu/11/include/stddef.h:
-
-/usr/include/stdio.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/struct_sched_param.h:
-
-/usr/include/c++/11/clocale:
-
-/usr/include/c++/11/bits/ostream.tcc:
-
-/usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h:
+/usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h:
 
 ../utils/file_utils.h:
 
@@ -1553,19 +1517,19 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/assert.h:
 
-/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h:
+/usr/include/aarch64-linux-gnu/bits/types/struct_sched_param.h:
 
-/usr/include/c++/11/bits/atomic_lockfree_defines.h:
+/usr/include/c++/11/clocale:
 
-/usr/include/aarch64-linux-gnu/bits/typesizes.h:
+/usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
 
-../rknpu2/yolov8.cc:
+/usr/include/c++/11/bits/ostream.tcc:
 
-/usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp:
+/usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h:
 
-/usr/include/libintl.h:
+/usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h:
 
-../main.cc:
+/usr/include/aarch64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h:
 
@@ -1575,39 +1539,53 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/time.h:
 
+../rknpu2/yolov8.cc:
+
+/usr/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp:
+
+/usr/include/libintl.h:
+
+../main.cc:
+
+/usr/include/c++/11/bits/stl_multiset.h:
+
+/usr/include/aarch64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/aarch64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/aarch64-linux-gnu/bits/types.h:
+
+/usr/include/aarch64-linux-gnu/bits/struct_mutex.h:
+
+/usr/include/aarch64-linux-gnu/bits/setjmp.h:
+
+/usr/include/opencv4/opencv2/core/saturate.hpp:
+
 /usr/include/aarch64-linux-gnu/bits/timesize.h:
 
-/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
+/usr/include/stdio.h:
 
-/usr/include/c++/11/cstdio:
+/usr/include/opencv4/opencv2/stitching/warpers.hpp:
 
-/usr/include/aarch64-linux-gnu/bits/types/sigset_t.h:
+/usr/include/opencv4/opencv2/stitching.hpp:
 
-/usr/include/opencv4/opencv2/objdetect.hpp:
-
-/usr/include/c++/11/bits/stl_raw_storage_iter.h:
-
-/usr/include/c++/11/ext/type_traits.h:
-
-../utils/common.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/opencv4/opencv2/dnn/dict.hpp:
-
-/usr/include/c++/11/bits/streambuf.tcc:
-
-/usr/include/string.h:
-
-/usr/include/aarch64-linux-gnu/bits/xopen_lim.h:
+/usr/lib/gcc/aarch64-linux-gnu/11/include/stddef.h:
 
 /usr/include/c++/11/debug/debug.h:
 
 /usr/include/features-time64.h:
 
-/usr/include/opencv4/opencv2/flann/general.h:
+/usr/include/c++/11/bits/functexcept.h:
 
-/usr/include/aarch64-linux-gnu/bits/endian.h:
+/usr/include/aarch64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/c++/11/bits/stl_list.h:
+
+/usr/include/opencv4/opencv2/flann/saving.h:
+
+/usr/include/aarch64-linux-gnu/bits/time.h:
+
+/usr/include/c++/11/streambuf:
 
 /usr/include/aarch64-linux-gnu/bits/fp-logb.h:
 
@@ -1629,11 +1607,7 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/features.h:
 
-/usr/include/aarch64-linux-gnu/bits/struct_rwlock.h:
-
-/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
-
-/usr/lib/gcc/aarch64-linux-gnu/11/include/arm_bf16.h:
+/usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
 
 /usr/include/c++/11/bits/concept_check.h:
 
@@ -1649,23 +1623,17 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/c++/11/cstring:
 
-/usr/include/c++/11/bits/stl_multiset.h:
+/usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h:
 
-/usr/include/aarch64-linux-gnu/bits/stdio_lim.h:
+/usr/include/opencv4/opencv2/dnn/dict.hpp:
 
-/usr/include/c++/11/bits/quoted_string.h:
+/usr/include/string.h:
 
-/usr/include/aarch64-linux-gnu/bits/types/locale_t.h:
+/usr/include/c++/11/bits/streambuf.tcc:
 
-/usr/include/aarch64-linux-gnu/bits/types/clock_t.h:
+/usr/include/aarch64-linux-gnu/bits/typesizes.h:
 
-/usr/include/aarch64-linux-gnu/c++/11/bits/os_defines.h:
-
-/usr/include/aarch64-linux-gnu/c++/11/bits/cpu_defines.h:
-
-/usr/include/aarch64-linux-gnu/c++/11/bits/time_members.h:
-
-/usr/include/c++/11/limits:
+/usr/include/c++/11/bits/atomic_lockfree_defines.h:
 
 /usr/include/c++/11/stdlib.h:
 
@@ -1709,6 +1677,20 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/aarch64-linux-gnu/sys/types.h:
 
+/usr/include/aarch64-linux-gnu/c++/11/bits/os_defines.h:
+
+/usr/include/c++/11/bits/quoted_string.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/opencv4/opencv2/objdetect.hpp:
+
+/usr/include/c++/11/bits/stl_raw_storage_iter.h:
+
 /usr/include/aarch64-linux-gnu/bits/types/clockid_t.h:
 
 /usr/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp:
@@ -1723,6 +1705,12 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 
 /usr/include/c++/11/bits/streambuf_iterator.h:
 
+/usr/include/aarch64-linux-gnu/bits/struct_rwlock.h:
+
+/usr/include/aarch64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/lib/gcc/aarch64-linux-gnu/11/include/arm_bf16.h:
+
 /usr/include/opencv4/opencv2/photo.hpp:
 
 /usr/include/c++/11/bits/erase_if.h:
@@ -1736,6 +1724,10 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 /usr/include/c++/11/future:
 
 /usr/include/c++/11/ext/aligned_buffer.h:
+
+/usr/include/opencv4/opencv2/flann/general.h:
+
+/usr/include/aarch64-linux-gnu/bits/endian.h:
 
 /usr/include/c++/11/type_traits:
 
@@ -1778,6 +1770,14 @@ CMakeFiles/rknn_yolov8_demo.dir/rknpu2/yolov8.cc.o: ../rknpu2/yolov8.cc \
 /usr/include/opencv4/opencv2/dnn/utils/inference_engine.hpp:
 
 /usr/lib/gcc/aarch64-linux-gnu/11/include/limits.h:
+
+/usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/aarch64-linux-gnu/c++/11/bits/cpu_defines.h:
+
+/usr/include/aarch64-linux-gnu/c++/11/bits/time_members.h:
+
+/usr/include/c++/11/limits:
 
 /usr/include/opencv4/opencv2/flann/flann_base.hpp:
 

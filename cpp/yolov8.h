@@ -49,7 +49,7 @@ public:
     rkYolov8(const char* model_path);
     int init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_weight);
     rknn_app_context_t *Get_app_ctx();
-    object_detect_result_list inference_yolov8_model(image_buffer_t* img);
+    object_detect_result_list inference_yolov8_model(cv::Mat &frame);
     ~rkYolov8();
 };
 

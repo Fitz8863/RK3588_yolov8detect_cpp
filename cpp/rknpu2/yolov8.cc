@@ -13,10 +13,25 @@
 static void dump_tensor_attr(rknn_tensor_attr* attr)
 {
     printf("  index=%d, name=%s, n_dims=%d, dims=[%d, %d, %d, %d], n_elems=%d, size=%d, fmt=%s, type=%s, qnt_type=%s, "
-           "zp=%d, scale=%f\n",
-           attr->index, attr->name, attr->n_dims, attr->dims[0], attr->dims[1], attr->dims[2], attr->dims[3],
-           attr->n_elems, attr->size, get_format_string(attr->fmt), get_type_string(attr->type),
-           get_qnt_type_string(attr->qnt_type), attr->zp, attr->scale);
+        "zp=%d, scale=%f\n",
+        attr->index, attr->name, attr->n_dims, attr->dims[0], attr->dims[1], attr->dims[2], attr->dims[3],
+        attr->n_elems, attr->size, get_format_string(attr->fmt), get_type_string(attr->type),
+        get_qnt_type_string(attr->qnt_type), attr->zp, attr->scale);
+}
+
+
+// 将cv::Mat转换为image_buffer_t
+image_buffer_t cv_to_buffer_t(cv::Mat &frame) {
+    image_buffer_t src_image;
+    memset(&src_image, 0, sizeof(image_buffer_t));
+
+    src_image.width = frame.cols;
+    src_image.height = frame.rows;
+    src_image.format = IMAGE_FORMAT_RGB888;
+
+    src_image.size = frame.cols * frame.rows * 3;
+    src_image.virt_addr = frame.data; // 不复制数据，直接引用OpenCV内存
+    return src_image;
 }
 
 rkYolov8::rkYolov8(const char* model_path) {
@@ -26,19 +41,19 @@ rkYolov8::rkYolov8(const char* model_path) {
 }
 
 // 获取类成员变app_ctx 接口
-rknn_app_context_t * rkYolov8::Get_app_ctx(){
+rknn_app_context_t* rkYolov8::Get_app_ctx() {
     return &(this->app_ctx);
 }
 
-int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_weight) {
+int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx, bool share_weight) {
     int ret;
     int model_len = 0;
-    char *model;
+    char* model;
 
     // rknn_context ctx = 0;
 
     this->app_ctx = *(input_app_ctx);
-    
+
     // Load RKNN Model
     model_len = read_data_from_file(this->model_path.c_str(), &model);
     if (model == NULL)
@@ -48,15 +63,13 @@ int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_wei
     }
 
     // 共享权重
-    if(true == share_weight){
+    if (true == share_weight) {
         ret = rknn_dup_context(&(input_app_ctx->rknn_ctx), &(this->app_ctx.rknn_ctx));
     }
-    else{
-        std::cout<<"wwwwwwwwwwwwwwww"<<std::endl;
+    else {
+        std::cout << "wwwwwwwwwwwwwwww" << std::endl;
         ret = rknn_init(&(this->app_ctx.rknn_ctx), model, model_len, 0, NULL);
     }
-
-    std::cout<<"wwwwwwwwwwwwwwww"<<std::endl;
 
     free(model);
     if (ret < 0)
@@ -79,8 +92,8 @@ int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_wei
         core_mask = RKNN_NPU_CORE_2;
         break;
     }
-    
-    printf("当前的NPU核:%d\n", core_mask);
+
+    // printf("当前的NPU核:%d\n", core_mask);
 
     ret = rknn_set_core_mask(this->app_ctx.rknn_ctx, core_mask);
     if (ret < 0)
@@ -97,7 +110,7 @@ int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_wei
         printf("rknn_query fail! ret=%d\n", ret);
         return -1;
     }
-    printf("model input num: %d, output num: %d\n", io_num.n_input, io_num.n_output);
+    // printf("model input num: %d, output num: %d\n", io_num.n_input, io_num.n_output);
 
     // Get Model Input Info
     printf("input tensors:\n");
@@ -143,9 +156,9 @@ int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_wei
     }
 
     app_ctx.io_num = io_num;
-    app_ctx.input_attrs = (rknn_tensor_attr *)malloc(io_num.n_input * sizeof(rknn_tensor_attr));
+    app_ctx.input_attrs = (rknn_tensor_attr*)malloc(io_num.n_input * sizeof(rknn_tensor_attr));
     memcpy(app_ctx.input_attrs, input_attrs, io_num.n_input * sizeof(rknn_tensor_attr));
-    app_ctx.output_attrs = (rknn_tensor_attr *)malloc(io_num.n_output * sizeof(rknn_tensor_attr));
+    app_ctx.output_attrs = (rknn_tensor_attr*)malloc(io_num.n_output * sizeof(rknn_tensor_attr));
     memcpy(app_ctx.output_attrs, output_attrs, io_num.n_output * sizeof(rknn_tensor_attr));
 
     if (input_attrs[0].fmt == RKNN_TENSOR_NCHW)
@@ -163,12 +176,12 @@ int rkYolov8::init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_wei
         app_ctx.model_channel = input_attrs[0].dims[3];
     }
     printf("model input height=%d, width=%d, channel=%d\n",
-           app_ctx.model_height, app_ctx.model_width, app_ctx.model_channel);
+        app_ctx.model_height, app_ctx.model_width, app_ctx.model_channel);
 
     return 0;
 }
 
-object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
+object_detect_result_list rkYolov8::inference_yolov8_model(cv::Mat &cv_img) //image_buffer_t* img
 {
     int ret;
     image_buffer_t dst_img;
@@ -180,12 +193,9 @@ object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
     rknn_output outputs[app_ctx.io_num.n_output];
     int bg_color = 114;
 
-    cv::Mat frame(img->height, img->width, CV_8UC3, img->virt_addr);
+    image_buffer_t img = cv_to_buffer_t(cv_img);
 
-    if (!(img))
-    {
-        return od_results;
-    }
+    cv::Mat frame(img.height, img.width, CV_8UC3, img.virt_addr);
 
     memset(&od_results, 0x00, sizeof(od_results));
     memset(&letter_box, 0, sizeof(letterbox_t));
@@ -198,7 +208,7 @@ object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
     dst_img.height = app_ctx.model_height;
     dst_img.format = IMAGE_FORMAT_RGB888;
     dst_img.size = get_image_size(&dst_img);
-    dst_img.virt_addr = (unsigned char *)malloc(dst_img.size);
+    dst_img.virt_addr = (unsigned char*)malloc(dst_img.size);
 
     if (dst_img.virt_addr == NULL)
     {
@@ -207,7 +217,7 @@ object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
     }
 
     // letterbox
-    ret = convert_image_with_letterbox(img, &dst_img, &letter_box, bg_color);
+    ret = convert_image_with_letterbox(&img, &dst_img, &letter_box, bg_color);
     if (ret < 0)
     {
         printf("convert_image_with_letterbox fail! ret=%d\n", ret);
@@ -255,7 +265,7 @@ object_detect_result_list rkYolov8::inference_yolov8_model(image_buffer_t *img)
     // Post Process
     post_process(&app_ctx, outputs, &letter_box, this->box_conf_threshold, this->nms_threshold, &od_results);
 
-    
+
     // 绘制检测框
     for (int i = 0; i < od_results.count; i++)
     {
@@ -287,7 +297,7 @@ out:
 
 
 rkYolov8::~rkYolov8() {
-     if (this->app_ctx.input_attrs != NULL)
+    if (this->app_ctx.input_attrs != NULL)
     {
         free(this->app_ctx.input_attrs);
         this->app_ctx.input_attrs = NULL;
