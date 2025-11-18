@@ -16,11 +16,11 @@ static unsigned int convert_color(unsigned int src_color, image_format_t dst_fmt
     unsigned int dst_color = 0x0;
     unsigned char* p_src_color = (unsigned char*)&src_color;
     unsigned char* p_dst_color = (unsigned char*)&dst_color;
+    char a = p_src_color[3];
     char r = p_src_color[2];
     char g = p_src_color[1];
     char b = p_src_color[0];
-    char a = p_src_color[3];
-
+    
     switch (dst_fmt)
     {
     case IMAGE_FORMAT_GRAY8:

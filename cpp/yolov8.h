@@ -19,26 +19,14 @@
 #include "common.h"
 #include <string>
 #include <mutex>
-#include "opencv2/opencv.hpp"
-
-typedef struct {
-    rknn_context rknn_ctx;
-    rknn_input_output_num io_num;
-    rknn_tensor_attr* input_attrs;
-    rknn_tensor_attr* output_attrs;
-    int model_channel;
-    int model_width;
-    int model_height;
-    bool is_quant;
-} rknn_app_context_t;
-
 #include "postprocess.h"
+#include "image_drawing.h"
 
 class rkYolov8
 {
 private:
     std::mutex mtx;
-    
+    image_buffer_t dst_img;
     std::string model_path;
     // char* model_path;
     float nms_threshold, box_conf_threshold;     // 默认的NMS阈值   // 默认的置信度阈值
@@ -49,7 +37,7 @@ public:
     rkYolov8(const char* model_path);
     int init_yolov8_model(rknn_app_context_t* input_app_ctx,bool share_weight);
     rknn_app_context_t *Get_app_ctx();
-    object_detect_result_list inference_yolov8_model(cv::Mat &frame);
+    All_result inference_yolov8_model(cv::Mat &frame);
     ~rkYolov8();
 };
 

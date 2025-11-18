@@ -24,6 +24,16 @@ set(JPEG_PATH ${CMAKE_CURRENT_SOURCE_DIR}/jpeg_turbo)
 set(LIBJPEG ${JPEG_PATH}/${CMAKE_SYSTEM_NAME}/${TARGET_LIB_ARCH}/libturbojpeg.a PARENT_SCOPE)
 set(LIBJPEG_INCLUDES ${JPEG_PATH}/include PARENT_SCOPE)
 
+# # OpenCV 路径
+set(OPENCV_PATH ${CMAKE_CURRENT_SOURCE_DIR}/opencv)
+# 自动抓取 lib 目录下的所有动态库或静态库
+file(GLOB OPENCVLIBS "${OPENCV_PATH}/lib/libopencv_*")   # 如果是静态库用 *.a
+# 将库路径也传给父级 CMake 使用
+set(OPENCV_LIBS ${OPENCVLIBS} PARENT_SCOPE)
+set(OPENCV_INCLUDES ${OPENCV_PATH}/include/opencv4 PARENT_SCOPE)
+
+
+
 
 # rknn runtime
 # for rknpu2

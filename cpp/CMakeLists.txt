@@ -13,30 +13,30 @@ if (ENABLE_ASAN)
 	set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
 endif ()
 
-set(rknpu_yolov8_file rknpu2/yolov8.cc)
-
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ 3rdparty.out)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/utils/ utils.out)
 
-# set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
+
 # 查找 OpenCV
-find_package(OpenCV REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS})
+# find_package(OpenCV REQUIRED)
+# include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME}
     main.cc
     postprocess.cc
-    ${rknpu_yolov8_file}
+    yolov8.cc
 )
+
+message(STATUS "OpenCV libraries: ${OPENCV_LIBS}")
 
 target_link_libraries(${PROJECT_NAME}
     imageutils
     fileutils
-    imagedrawing    
+    imagedrawing  
+    # ${OpenCV_LIBS} # 这个是系统的名称
+    ${OPENCV_LIBS} 
     ${LIBRKNNRT}
-    ${OpenCV_LIBS}
-    dl
 )
 
 
@@ -48,19 +48,11 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries(${PROJECT_NAME} Threads::Threads)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
+    $(OPENCV_INCLUDES)
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${LIBRKNNRT_INCLUDES}
     ${THREAD_INCLUDES}
 )
-
-# install(TARGETS ${PROJECT_NAME} DESTINATION .)
-
-# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/bus.jpg DESTINATION model)
-# install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../model/coco_80_labels_list.txt DESTINATION model)
-# file(GLOB RKNN_FILES "${CMAKE_CURRENT_SOURCE_DIR}/../model/*.rknn")
-# install(FILES ${RKNN_FILES} DESTINATION model)
-
 

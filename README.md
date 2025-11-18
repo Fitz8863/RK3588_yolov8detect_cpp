@@ -1,196 +1,156 @@
-# yolov8
+-  
 
-## Table of contents
+# RK3588实现线程池推理yolov8(C++版本)
 
-- [1. Description](#1-description)
-- [2. Current Support Platform](#2-current-support-platform)
-- [3. Pretrained Model](#3-pretrained-model)
-- [4. Convert to RKNN](#4-convert-to-rknn)
-- [5. Python Demo](#5-python-demo)
-- [6. Android Demo](#6-android-demo)
-  - [6.1 Compile and Build](#61-compile-and-build)
-  - [6.2 Push demo files to device](#62-push-demo-files-to-device)
-  - [6.3 Run demo](#63-run-demo)
-- [7. Linux Demo](#7-linux-demo)
-  - [7.1 Compile and Build](#71-compile-and-build)
-  - [7.2 Push demo files to device](#72-push-demo-files-to-device)
-  - [7.3 Run demo](#73-run-demo)
-- [8. Expected Results](#8-expected-results)
+这里提供了C++版本的yolov8线程池推理的代码，我已经把全部要用到的动态库环境一同放到此项目中，所以无需去安装opencv已经RKNN等各种环境，拉下即可直接编译运行。这里提供线程池的版本和普通单线程的版本，另外也有对应的操作系统版本(Ubuntu22.04 和 Ubunty20.04)，你根据你的开发板情况去下载。
 
 
 
-## 1. Description
+## 环境说明
 
-The model used in this example comes from the following open source projects:  
+### PC端（模型量化）
 
-https://github.com/airockchip/ultralytics_yolov8
+Python版本：conda环境，Python 3.10.16
 
+操作系统：Ubuntu20.04
 
+rknn-toolkit2版本：Version: 2.0.0b0+9bab5682rknn-toolkit2版本：Version: 2.0.0b0 9bab5682
 
-## 2. Current Support Platform
-
-RK3566, RK3568, RK3588, RK3562, RK1808, RV1109, RV1126
-
-
-
-## 3. Pretrained Model
-
-Download link: 
-
-[./yolov8n.onnx](https://ftrg.zbox.filez.com/v2/delivery/data/95f00b0fc900458ba134f8b180b3f7a1/examples/yolov8/yolov8n.onnx)<br />[./yolov8s.onnx](https://ftrg.zbox.filez.com/v2/delivery/data/95f00b0fc900458ba134f8b180b3f7a1/examples/yolov8/yolov8s.onnx)<br />[./yolov8m.onnx](https://ftrg.zbox.filez.com/v2/delivery/data/95f00b0fc900458ba134f8b180b3f7a1/examples/yolov8/yolov8m.onnx)
-
-Download with shell command:
-
-```
-cd model
-./download_model.sh
+```bash
+# 可以通过这个指令查看
+pip3 show rknn-toolkit2
 ```
 
-**Note**: The model provided here is an optimized model, which is different from the official original model. Take yolov8n.onnx as an example to show the difference between them.
-1. The comparison of their output information is as follows. The left is the official original model, and the right is the optimized model. As shown in the figure, the original one output is divided into three groups. For example, in the set of outputs ([1,64,80,80],[1,80,80,80],[1,1,80,80]), [1,64,80,80] is the coordinate of the box, [1,80,80,80] is the confidence of the box corresponding to the 80 categories, and [1,1,80,80] is the sum of the confidence of the 80 categories.
+### 香橙派rk3588端
 
-<div align=center>
-  <img src="./model_comparison/yolov8_output_comparison.jpg" alt="Image">
-</div>
+Python版本：Python 3.10.12
 
-2. Taking the the set of outputs ([1,64,80,80],[1,80,80,80],[1,1,80,80]) as an example, we remove the subgraphs behind the two convolution nodes in the model, keep the outputs of these two convolutions ([1,64,80,80],[1,80,80,80]), and add a reducesum+clip branch for calculating the sum of the confidence of the 80 categories ([1,1,80,80]).
+操作系统：Ubuntu20.04 / Ubuntu22.04
 
-<div align=center>
-  <img src="./model_comparison/yolov8_graph_comparison.jpg" alt="Image">
-</div>
+NPU版本：RKNPU driver: v0.9.6（0.9.6版本的都兼容）
 
-
-## 4. Convert to RKNN
-
-*Usage:*
-
-```shell
-cd python
-python convert.py <onnx_model> <TARGET_PLATFORM> <dtype(optional)> <output_rknn_path(optional)>
-
-# such as: 
-python convert.py ../model/yolov8n.onnx rk3588
-# output model will be saved as ../model/yolov8.rknn
+```bash
+# 可通过下面这个查看
+sudo cat /sys/kernel/debug/rknpu/version
 ```
 
-*Description:*
+rknn-toolkit-lite2：Version: 1.6.0
 
-- `<onnx_model>`: Specify ONNX model path.
-- `<TARGET_PLATFORM>`: Specify NPU platform name. Support Platform refer [here](#2 Current Support Platform).
-- `<dtype>(optional)`: Specify as `i8`, `u8` or `fp`. `i8`/`u8` for doing quantization, `fp` for no quantization. Default is `i8`.
-- `<output_rknn_path>(optional)`: Specify save path for the RKNN model, default save in the same directory as ONNX model with name `yolov8.rknn`
-
-
-
-## 5. Python Demo
-
-*Usage:*
-
-```shell
-cd python
-# Inference with PyTorch model or ONNX model
-python yolov8.py --model_path <pt_model/onnx_model> --img_show
-
-# Inference with RKNN model
-python yolov8.py --model_path <rknn_model> --target <TARGET_PLATFORM> --img_show
+```bash
+# 可以通过下面这个指令查看
+pip3 show rknn-toolkit-lite2
 ```
 
-*Description:*
+## 模型相关结构说明
 
-- `<TARGET_PLATFORM>`: Specify NPU platform name. Support Platform refer [here](#2 Current Support Platform).
+它们输出信息的对比如下。左侧是官方原始模型，右侧是优化后的模型。如图所示，原始模型的输出分为三组。以输出集合（[1,64,80,80]、[1,80,80,80]、[1,1,80,80]）为例，[1,64,80,80]表示边界框的坐标，[1,80,80,80]表示边界框对应80个类别的置信度，而[1,1,80,80]表示这80个类别置信度的总和。
 
-- `<pt_model / onnx_model / rknn_model>`: Specify the model path.
+![image-20251118213659671](README_img/image-20251118213659671.png)
 
+以输出集合（[1,64,80,80]、[1,80,80,80]、[1,1,80,80]）为例，我们移除了模型中两个卷积节点后的子图，保留了这两个卷积的输出（[1,64,80,80]和[1,80,80,80]），并增加了一个reducesum+clip分支用于计算80个类别置信度的总和（[1,1,80,80]）。
 
+![image-20251118213734680](README_img/image-20251118213734680.png)
 
-## 6. Android Demo
+yolov8模型rknn量化和转换参考这部分：
 
-**Note: RK1808, RV1109, RV1126 does not support Android.**
+> [Fitz8863/RK3588_yolo_quantification](https://github.com/Fitz8863/RK3588_yolo_quantification)
 
-#### 6.1 Compile and Build
+## 运行代码步骤
 
-Please refer to the [Compilation_Environment_Setup_Guide](../../docs/Compilation_Environment_Setup_Guide.md#android-platform) document to setup a cross-compilation environment and complete the compilation of C/C++ Demo.  
-**Note: Please replace the model name with `yolov8`.**
+拉取代码
 
-#### 6.2 Push demo files to device
-
-With device connected via USB port, push demo files to devices:
-
-```shell
-adb root
-adb remount
-adb push install/<TARGET_PLATFORM>_android_<ARCH>/rknn_yolov8_demo/ /data/
+```bash
+git clone git@github.com:Fitz8863/RK3588_yolov8detect_cpp.git
 ```
 
-#### 6.3 Run demo
+进入项目
 
-```sh
-adb shell
-cd /data/rknn_yolov8_demo
-
-export LD_LIBRARY_PATH=./lib
-./rknn_yolov8_demo model/yolov8.rknn model/bus.jpg
+```bash
+cd RK3588_yolov8detect_cpp
+cd cpp
 ```
 
-- After running, the result was saved as `out.png`. To check the result on host PC, pull back result referring to the following command: 
+### opencv库文件的选择
 
-  ```sh
-  adb pull /data/rknn_yolov8_demo/out.png
-  ```
+进入到3rdparty文件夹下的opencv目录，这里可以看到下面两个压缩包，这两个分别是Ubuntu22.04 和 Ubunty20.04 对应的opencv库文件，你就根据你当前板子的操作系统去选择其中一个解压。
 
-- Output result refer [Expected Results](#8-expected-results).
+![image-20251118215731398](README_img/image-20251118215731398.png)
 
+比如我的操作系统是Ubuntu22.04，那我执行下面这个解压指令
 
-
-## 7. Linux Demo
-
-#### 7.1 Compile and Build
-
-Please refer to the [Compilation_Environment_Setup_Guide](../../docs/Compilation_Environment_Setup_Guide.md#linux-platform) document to setup a cross-compilation environment and complete the compilation of C/C++ Demo.
-**Note: Please replace the model name with `yolov8`.**
-
-#### 7.2 Push demo files to device
-
-- If device connected via USB port, push demo files to devices:
-
-```shell
-adb push install/<TARGET_PLATFORM>_linux_<ARCH>/rknn_yolov8_demo/ /userdata/
+```bash
+tar -xzf cpp/3rdparty/opencv/opencv22.04.tar.gz -C cpp/3rdparty/opencv
 ```
 
-- For other boards, use `scp` or other approaches to push all files under `install/<TARGET_PLATFORM>_linux_<ARCH>/rknn_yolov8_demo/` to `userdata`.
+然后对解压的那个文件夹重命名就行了，解压后的名字是opencv，这里需要改成lib
 
-#### 7.3 Run demo
+![image-20251118220602167](README_img/image-20251118220602167.png)
 
-```sh
-adb shell
-cd /userdata/rknn_yolov8_demo
+![image-20251118220620184](README_img/image-20251118220620184.png)
 
-export LD_LIBRARY_PATH=./lib
-./rknn_yolov8_demo model/yolov8.rknn model/bus.jpg
+完成上面的步骤，然后创建进入build目录
+
+```bash
+mkdir -p build && cd build
 ```
 
-- After running, the result was saved as `out.png`. To check the result on host PC, pull back result referring to the following command: 
+在build目录下执行cake 和 make
 
-  ```
-  adb pull /userdata/rknn_yolov8_demo/out.png
-  ```
-
-- Output result refer [Expected Results](#8-expected-results).
-
-
-
-## 8. Expected Results
-
-This example will print the labels and corresponding scores of the test image detect results, as follows:
-
-```
-person @ (211 241 283 507) 0.873
-person @ (109 235 225 536) 0.866
-person @ (476 222 560 521) 0.863
-bus @ (99 136 550 456) 0.859
-person @ (80 326 116 513) 0.311
+```bash
+cmake -DCMAKE_INSTALL_PREFIX=../install ..
 ```
 
-<img src="result.png">
+```bash
+make -j8
+```
 
-- Note: Different platforms, different versions of tools and drivers may have slightly different results.
+最后执行
+
+```bash
+make install
+```
+
+可以看到生成了rknn_yolov8_demo 这个可执行程序，但是在此之前要执行下面这个语句，把库环境导入到当前终端中
+
+```bash
+export LD_LIBRARY_PATH=../install/lib
+export LD_LIBRARY_PATH=../3rdparty/opencv/lib
+```
+
+然后运行测试视频代码
+
+```bash
+./rknn_yolov8_demo ../../model/yolov8s.rknn ../../video/spiderman.mp4
+```
+
+然后可以通过下面这个指令查看NPU的占用情况
+
+```bash
+watch sudo cat /sys/kernel/debug/rknpu/loa
+```
+
+## 补充说明
+
+### 1、识别的类别
+
+这里有一个文本，这个文本是表示要识别的类别，如果你要去推理你自己的模型的话，记得修改一下这个文本里面的内容
+
+![image-20251118214239884](README_img/image-20251118214239884.png)
+
+### 2、关于推流和ffmpeg
+
+可以看到main.cc主文件的这里，这里有一个编译宏，默认注释掉是表示不使用推流，使用直接在显示屏显示推理后的视频；如果解开注释的话就表示使用推流的形式。
+
+如果想部署相关流媒体服务器，可以参考这个:
+
+> [搭建简易的rtsp服务器_rtsp-simple-server-CSDN博客](https://blog.csdn.net/m0_74279129/article/details/146427145)
+
+![image-20251118214317887](README_img/image-20251118214317887.png)
+
+下面这里是推流的指令，我是使用ffmpeg去推流的，这里需要设置推流的分辨率和帧率这些参数，这里你根据实际情况去设置就行了。还有就是 -c:v h264_rkmpp 这里是指定推流使用的H264流编码器 ，我这里指定是使用硬件编码也就是rk3588的 h264_rkmpp 编码器，如果你的设备不支持这个那请你把 h264_rkmpp 改成 libx264 就行了，这个是使用cpu默认编码。
+
+![image-20251109162435981](https://github.com/Fitz8863/RK3588_yolov5detect_cpp/raw/main/README_img/image-20251109162435981.png)
+
+这里我强烈建议你使用硬件编码去实现推流的操作。因为程序模型推理是属于非常吃开发板性能的，CPU软件编码本身就是很容易导致程序崩溃，具体教程可参考下面博客
+
+> [rk3588 ffmpeg硬编码安装_rk3588 ffmpeg硬解码-CSDN博客](https://blog.csdn.net/qq_59164231/article/details/143510535)

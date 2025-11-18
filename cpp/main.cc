@@ -1,12 +1,5 @@
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "image_utils.h"
-#include "file_utils.h"
-#include "image_drawing.h"
-#include <iostream>
-#include "opencv2/opencv.hpp"
 #include <sys/time.h>
 
 #include "yolov8.h"
@@ -15,22 +8,104 @@
 #include <mutex>
 #include <atomic>
 
+// #define USE_RTSP // 是否使用rtsp推流
 
-int main(int argc, char **argv)
+std::atomic<bool> running(true);
+
+void capture_thread(cv::VideoCapture& capture, rknnPool<rkYolov8, cv::Mat&, All_result>& testPool)
 {
-    if (argc != 3)
+    while (running && capture.isOpened())
     {
+        cv::Mat frame;
+        capture >> frame;
+        if (frame.empty()) {
+            break;
+        }
+        // 丢进线程池
+        if (testPool.put(frame) != 0)
+        {
+            printf("Put frame to pool failed!\n");
+            break;
+        }
+    }
+}
+
+void display_thread(rknnPool<rkYolov8, cv::Mat&, All_result>& testPool, int threadNum)
+{
+#ifdef USE_RTSP
+
+    int width = 1280;
+    int height = 720;
+    int fps = 60;
+
+    // FFmpeg 推流命令
+    std::string cmd =
+        "ffmpeg -y "
+        "-f rawvideo -pix_fmt bgr24 -s " + std::to_string(width) + "x" + std::to_string(height) +
+        " -r " + std::to_string(fps) +
+        " -i - "
+        "-c:v h264_rkmpp -preset ultrafast -tune zerolatency "
+        "-fflags nobuffer -flags low_delay "
+        "-rtsp_transport udp "
+        "-f rtsp rtsp://10.60.90.188:8554/video";
+
+    FILE* ffmpeg = popen(cmd.c_str(), "w");
+    if (!ffmpeg) {
+        std::cerr << "Failed to open ffmpeg pipe!" << std::endl;
+        return;
+    }
+
+#endif 
+    struct timeval time;
+    gettimeofday(&time, nullptr);
+    auto beforeTime = time.tv_sec * 1000 + time.tv_usec / 1000;
+    int count = 0;
+    
+    bool start_get = false;
+    All_result result;
+    while (running)
+    {
+        if (testPool.get(result) == 0 && !result.img.empty()) {
+#ifdef USE_RTSP
+            fwrite(result.img.data, 1, width * height * 3, ffmpeg);
+#else
+
+            // 显示帧
+            cv::imshow("Yolov8", result.img);
+            char c = (char)cv::waitKey(1);
+            if (c == 'q' || c == 'Q') {
+                break;
+            }
+#endif
+
+            count++;
+            if (count >= 60) {
+                gettimeofday(&time, nullptr);
+                auto currentTime = time.tv_sec * 1000 + time.tv_usec / 1000;
+                printf("当前帧率: %.2f fps\n", 60.0 / float(currentTime - beforeTime) * 1000.0);
+                beforeTime = currentTime;
+                count = 0;
+            }
+        }
+    }
+#ifdef USE_RTSP
+    pclose(ffmpeg);
+#endif
+}
+
+
+int main(int argc, char** argv)
+{
+    if (argc != 3) {
         printf("%s <model_path> <video_path or camera_id>\n", argv[0]);
-        printf("Example: %s model.rknn 0   # use camera\n", argv[0]);
-        printf("         %s model.rknn video.mp4   # use video file\n", argv[0]);
         return -1;
     }
 
-    const char *model_path = argv[1];
-    const char *video_name = argv[2];
+    const char* model_path = argv[1];
+    const char* video_name = argv[2];
 
     int threadNum = 3;
-    rknnPool<rkYolov8, cv::Mat &, object_detect_result_list> testPool(model_path, threadNum);
+    rknnPool<rkYolov8, cv::Mat&, All_result> testPool(model_path, threadNum);
 
     init_post_process();
 
@@ -46,12 +121,12 @@ int main(int argc, char **argv)
     {
 
         std::string pipeline = "v4l2src device=" + std::string(video_name) +
-                               " ! image/jpeg, width=1280, height=720, framerate=60/1 ! "
-                               "jpegdec ! videoconvert ! appsink";
+            " ! image/jpeg, width=1280, height=720, framerate=60/1 ! "
+            "jpegdec ! videoconvert ! appsink";
         cap.open(pipeline, cv::CAP_GSTREAMER);
 
         // 如果没有GStreamer环境的话使用下面这个
-        // capture.open(std::string(video_name));
+        // cap.open(std::string(video_name));
     }
 
     else
@@ -59,44 +134,12 @@ int main(int argc, char **argv)
         cap.open(std::string(video_name));
     }
 
-    struct timeval time;
-    auto beforeTime = time.tv_sec * 1000 + time.tv_usec / 1000;
-    int count = 0;
+    // 线程同步
+    std::thread t1(capture_thread, std::ref(cap), std::ref(testPool));
+    std::thread t2(display_thread, std::ref(testPool), threadNum);
 
-    cv::Mat frame;
-    while (true)
-    {
-        cap >> frame;
-        if (frame.empty())
-            break;
-        object_detect_result_list od_results;
-
-        if (testPool.put(frame) != 0)
-        {
-            printf("Put frame to pool failed!\n");
-            break;
-        }
-
-        if (count >= threadNum && testPool.get(od_results) != 0)
-            break;
-
-        // 显示
-        cv::imshow("YOLOv8 RKNN Detection", frame);
-
-        // 按 q 退出
-        if (cv::waitKey(1) == 'q')
-            break;
-
-        count++;
-        if (count >= 60)
-        {
-            gettimeofday(&time, nullptr);
-            auto currentTime = time.tv_sec * 1000 + time.tv_usec / 1000;
-            printf("60帧平均帧率: %.2f fps\n", 60.0 / float(currentTime - beforeTime) * 1000.0);
-            beforeTime = currentTime;
-            count = 0;
-        }
-    }
+    t1.join();
+    t2.join();
 
     cap.release();
     cv::destroyAllWindows();

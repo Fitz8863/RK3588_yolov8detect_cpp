@@ -5,6 +5,7 @@ project(rknn_model_zoo_utils)
 add_library(fileutils STATIC
     file_utils.c
 )
+
 target_include_directories(fileutils PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -24,9 +25,6 @@ endif()
 add_library(imageutils STATIC
     image_utils.c
 )
-target_include_directories(imageutils PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
 
 target_link_libraries(imageutils
     ${LIBJPEG}
@@ -34,6 +32,7 @@ target_link_libraries(imageutils
 )
 
 target_include_directories(imageutils PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${STB_INCLUDES}
     ${LIBJPEG_INCLUDES}
     ${LIBRGA_INCLUDES}

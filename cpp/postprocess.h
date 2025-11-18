@@ -6,7 +6,13 @@
 #include "rknn_api.h"
 #include "common.h"
 #include "image_utils.h"
+#include <iostream>
 
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
+#define LABEL_NALE_TXT_PATH "../../model/coco_80_labels_list.txt"
 #define OBJ_NAME_MAX_SIZE 64
 #define OBJ_NUMB_MAX_SIZE 128
 #define OBJ_CLASS_NUM 80
@@ -14,6 +20,16 @@
 #define BOX_THRESH 0.25
 
 // class rknn_app_context_t;
+typedef struct {
+    rknn_context rknn_ctx;
+    rknn_input_output_num io_num;
+    rknn_tensor_attr* input_attrs;
+    rknn_tensor_attr* output_attrs;
+    int model_channel;
+    int model_width;
+    int model_height;
+    bool is_quant;
+} rknn_app_context_t;
 
 typedef struct {
     image_rect_t box;
@@ -26,6 +42,11 @@ typedef struct {
     int count;
     object_detect_result results[OBJ_NUMB_MAX_SIZE];
 } object_detect_result_list;
+
+typedef struct final_result{
+    object_detect_result_list od_results;
+    cv::Mat img;
+}All_result;
 
 int init_post_process();
 void deinit_post_process();
